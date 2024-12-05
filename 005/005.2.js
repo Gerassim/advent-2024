@@ -12,10 +12,10 @@ await processLineByLine(`${data}reports.txt`, (line) => {
 });
 
 const isReportCorrect = (report, shift = 0) => {
-  for (let i = 0; i < report.length - 1; i++) {
+  for (let i = shift; i < report.length - 1; i++) {
     for (let j = i + 1; j < report.length; j++) {
       if (pairs.find(v => v[0] === report[i] && v[1] === report[j]) === undefined) {
-        return [i + shift, j + shift]
+        return [i, j]
       }
     }
   }
@@ -29,7 +29,7 @@ for (const report of reports) {
   if (res !== true) {
     while (res !== true && res[0] <= Math.floor(report.length / 2)) {
       [report[res[0]], report[res[1]]] = [report[res[1]], report[res[0]]]
-      res = isReportCorrect(report.slice(res[0]), res[0])
+      res = isReportCorrect(report, res[0])
     }
     sum += report[Math.floor(report.length / 2)]
   }
