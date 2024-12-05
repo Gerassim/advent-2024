@@ -28,9 +28,10 @@ for (const report of reports) {
   let res = isReportCorrect(report);
   if (res !== true) {
     while (res !== true && res[0] <= Math.floor(report.length / 2)) {
-      // slow as fuck
       // [report[res[0]], report[res[1]]] = [report[res[1]], report[res[0]]]
-      const swp = res[0]; res[0]=res[1]; res[1]=swp;
+      const swp = report[res[0]];
+      report[res[0]] = report[res[1]];
+      report[res[1]] = swp;
       res = isReportCorrect(report, res[0])
     }
     sum += report[Math.floor(report.length / 2)]
