@@ -29,8 +29,7 @@ for (let i = 0; i < initialLab.length; i++) {
       move.lab[i][j] = '#';
     }
 
-    let canMove = true;
-    while (canMove) {
+    while (true) {
       const newPos = [move.p[0] + directions[move.d][0], move.p[1] + directions[move.d][1]]
       // if out of bounds end
       if (
@@ -43,10 +42,12 @@ for (let i = 0; i < initialLab.length; i++) {
       // if obstruction rotate, else move
       if (move.lab[newPos[0]][newPos[1]] === '#') {
         move.d = (move.d + 1) % directions.length
+        // if already been here and made same rotation we are in a loop
         if (move.lab[move.p[0]][move.p[1]] === directions[move.d][2]) {
           counter++;
           break;
         }
+        // if never rotate here mark with direction
         if(move.lab[move.p[0]][move.p[1]] === '.') {
           move.lab[move.p[0]][move.p[1]] = directions[move.d][2];
         }
