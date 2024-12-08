@@ -11,23 +11,36 @@ const mult = (a, b) => a * b;
 const concat = (a, b) => a * Math.pow(10, Math.floor(Math.log10(b) + 1)) + b
 
 const evaluate = (sums, arr, goal) => {
-  if (arr.length > 0 && sums.length > 0 && !sums.includes(goal)) {
+  if (arr.length > 0 && sums.length > 0) {
     const newData = [];
     for (let i = 0; i < sums.length; i++) {
-      if(sum(sums[i], arr[0]) <= goal) {
-        newData.push(sum(sums[i], arr[0]))
+      const c = concat(sums[i], arr[0]);
+      if (c <= goal) {
+        if(c === goal) {
+          return goal;
+        }
+        newData.push(c)
       }
-      if(mult(sums[i], arr[0]) <= goal) {
-        newData.push(mult(sums[i], arr[0]))
+      const s = sum(sums[i], arr[0]);
+      if ( s<= goal) {
+        if(s === goal) {
+          return goal;
+        }
+        newData.push(s)
       }
-      if(concat(sums[i], arr[0]) <= goal) {
-        newData.push(concat(sums[i], arr[0]))
+      const m = mult(sums[i], arr[0]);
+      if (m <= goal) {
+        if(m === goal) {
+          return goal;
+        }
+        newData.push(m)
       }
     }
+
     return evaluate(newData, arr.slice(1), goal);
-  } else {
-    return sums.includes(goal) ? goal : 0;
   }
+
+  return 0
 }
 
 
